@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amogh Shakti | Vedic Wisdom & Astrology</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Noto Sans Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            primary: 'var(--primary-color)',
+                            secondary: 'var(--secondary-color)',
+                            bg: 'var(--bg-color)',
+                            text: 'var(--text-color)',
+                            card: 'var(--card-bg)',
+                            accent: 'var(--accent-color)',
+                        }
+                    },
+                    animation: {
+                        'scroll': 'scroll 60s linear infinite',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'spin-slow': 'spin 12s linear infinite',
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            /* AMOGH SHAKTI SOLAR PALETTE */
+            --primary-color: #c2410c;   /* Deep Rust Orange */
+            --secondary-color: #ea580c; /* Solar Flare Orange */
+            --accent-color: #fbbf24;    /* Golden Glow */
+            
+            /* Cosmic Cream Theme */
+            --bg-color: #fff7ed;        /* Warm Cream */
+            --text-color: #1c1917;      /* Warm Black */
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(234, 88, 12, 0.2); 
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ea580c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(234, 88, 12, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 3-Column Grid Layout */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 2rem;
+        }
+        @media (min-width: 640px) {
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .catalog-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        /* Sidebar Styling */
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            color: #4b5563;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .sidebar-link:hover {
+            background-color: #fff7ed;
+            color: #c2410c;
+        }
+        .sidebar-link.active {
+            background-color: #c2410c;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgba(194, 65, 12, 0.2);
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden selection:bg-orange-200 selection:text-orange-900">
+
+    <!-- SHOP CATALOG OVERLAY -->
+    <div id="shop-overlay" class="fixed inset-0 z-[100] bg-[#fff7ed] transform translate-y-full transition-transform duration-500 overflow-y-auto">
+        
+        <!-- Shop Header -->
+        <div class="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-orange-100 px-6 py-4 flex justify-between items-center shadow-sm">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded bg-gradient-to-br from-brand-primary to-brand-secondary text-white flex items-center justify-center font-bold font-serif">A</div>
+                <span class="font-serif font-bold text-lg text-gray-900">Amogh Shakti <span class="text-brand-primary font-normal italic">Store</span></span>
+            </div>
+            <button onclick="toggleShop()" class="p-2 hover:bg-orange-50 rounded-full text-gray-600 hover:text-brand-primary transition-colors">
+                <i class="ri-close-line text-2xl"></i>
+            </button>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- LEFT SIDEBAR (Main Categories) -->
+                <aside class="w-full lg:w-64 flex-shrink-0">
+                    <div class="sticky top-24 bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
+                        <h3 class="font-serif font-bold text-xl mb-6 text-gray-900 border-b border-orange-100 pb-4">Categories</h3>
+                        
+                        <div class="space-y-1" id="category-sidebar">
+                            <!-- Sidebar Items Injected JS -->
+                            <div onclick="filterProducts('all')" class="sidebar-link active" id="cat-all">
+                                <span>All Products</span>
+                                <i class="ri-apps-line"></i>
+                            </div>
+                            <div onclick="filterProducts('Gemstones')" class="sidebar-link" id="cat-Gemstones">
+                                <span>Gemstones</span>
+                                <i class="ri-diamond-line"></i>
+                            </div>
+                            <div onclick="filterProducts('Rudraksha')" class="sidebar-link" id="cat-Rudraksha">
+                                <span>Rudraksha</span>
+                                <i class="ri-checkbox-circle-line"></i>
+                            </div>
+                             <div onclick="filterProducts('Yantras')" class="sidebar-link" id="cat-Yantras">
+                                <span>Yantras</span>
+                                <i class="ri-shape-line"></i>
+                            </div>
+                            <div onclick="filterProducts('Mala Beads')" class="sidebar-link" id="cat-Mala Beads">
+                                <span>Mala Beads</span>
+                                <i class="ri-focus-3-line"></i>
+                            </div>
+                            <div onclick="filterProducts('Idols')" class="sidebar-link" id="cat-Idols">
+                                <span>Idols</span>
+                                <i class="ri-user-star-line"></i>
+                            </div>
+                            <div onclick="filterProducts('Pooja Items')" class="sidebar-link" id="cat-Pooja Items">
+                                <span>Pooja Items</span>
+                                <i class="ri-fire-line"></i>
+                            </div>
+                        </div>
+
+                        <!-- Mini Banner -->
+                        <div class="mt-8 bg-orange-50 rounded-xl p-4 text-center border border-orange-100">
+                            <i class="ri-customer-service-2-line text-3xl text-brand-primary mb-2"></i>
+                            <p class="text-xs font-bold text-gray-600 mb-2">Need Help Choosing?</p>
+                            <button onclick="openChat()" class="text-xs text-brand-primary font-bold border-b border-brand-primary pb-0.5">Chat with Acharya AI</button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- RIGHT CONTENT (3x3 Grid) -->
+                <div class="flex-1">
+                    <!-- Banner -->
+                    <div class="bg-brand-primary text-white rounded-3xl p-8 mb-8 relative overflow-hidden shadow-lg">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                        <img src="https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&q=80&w=1200" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay" alt="Texture">
+                        <div class="relative z-10">
+                            <h1 class="text-3xl md:text-4xl font-serif font-bold mb-2">Divine Collection</h1>
+                            <p class="text-orange-100 text-sm max-w-md">Explore over 100+ authentic Vedic remedies, certified gemstones, and energized spiritual tools.</p>
+                        </div>
+                    </div>
+
+                    <!-- Filter Info -->
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-gray-500 text-sm" id="product-count">Showing 60 Products</span>
+                        <select class="bg-white border border-gray-200 text-sm rounded-lg p-2 focus:outline-none focus:border-brand-primary">
+                            <option>Sort by: Popular</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                    </div>
+
+                    <!-- 3-Column Grid -->
+                    <div id="product-grid" class="catalog-grid">
+                        <!-- Products Injected Here -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex justify-center mt-12 gap-2">
+                        <button class="w-10 h-10 rounded-full border hover:bg-gray-50 flex items-center justify-center disabled:opacity-50" disabled><i class="ri-arrow-left-s-line"></i></button>
+                        <button class="w-10 h-10 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold shadow-md">1</button>
+                        <button class="w-10 h-10 rounded-full border hover:bg-gray-50 flex items-center justify-center">2</button>
+                        <button class="w-10 h-10 rounded-full border hover:bg-gray-50 flex items-center justify-center">3</button>
+                        <span class="flex items-center px-2 text-gray-400">...</span>
+                        <button class="w-10 h-10 rounded-full border hover:bg-gray-50 flex items-center justify-center"><i class="ri-arrow-right-s-line"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN PAGE (Background) -->
+    
+    <!-- NAVIGATION -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 px-6 py-5">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-primary to-brand-secondary text-white flex items-center justify-center font-serif font-bold text-xl shadow-lg">A</div>
+                <div>
+                    <span class="font-serif font-bold text-xl tracking-tight text-brand-primary block leading-none">AMOGH SHAKTI</span>
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-secondary opacity-80">Vedic Wisdom</span>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-700">
+                <a href="#horoscope" class="hover:text-brand-primary transition-colors">Horoscopes</a>
+                <a href="#services" class="hover:text-brand-primary transition-colors">Services</a>
+                <a href="#" onclick="toggleShop()" class="hover:text-brand-primary transition-colors">Gemstones</a>
+                <a href="#about" class="hover:text-brand-primary transition-colors">Guru Ji</a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-4">
+                <button onclick="toggleShop()" class="p-2 text-brand-primary hover:bg-orange-100 rounded-full transition-colors relative">
+                    <i class="ri-shopping-bag-3-line text-xl"></i>
+                    <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                </button>
+                <button onclick="openChat()" class="btn-primary px-6 py-2.5 rounded-full font-semibold text-sm hover:scale-105 transition-transform">
+                    Book Consult
+                </button>
+            </div>
+            <button class="md:hidden text-2xl text-brand-primary" id="mobile-menu-btn"><i class="ri-menu-4-line"></i></button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="pt-36 pb-20 px-6 min-h-[80vh] flex items-center justify-center text-center">
+        <div class="max-w-4xl mx-auto flex flex-col items-center">
+            <div class="space-y-8 animate-fade-in flex flex-col items-center">
+                <h1 class="text-5xl md:text-7xl font-serif font-bold leading-[1.1] text-gray-900">
+                    Decide Your <br>
+                    <span class="text-gradient">Destiny</span> Today.
+                </h1>
+                <p class="text-lg text-gray-600 max-w-lg leading-relaxed">
+                    Navigate life's complexities with ancient Vedic Astrology, Tantra, and Gemstone science. Trusted by 85,000+ souls worldwide.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                    <button onclick="openChat()" class="btn-primary px-8 py-4 rounded-xl font-bold shadow-orange-200 hover:shadow-orange-300 transition-all flex items-center justify-center gap-2">
+                        Get Kundli Report <i class="ri-arrow-right-line"></i>
+                    </button>
+                    <button onclick="toggleShop()" class="px-8 py-4 rounded-xl glass font-bold text-brand-primary hover:bg-white transition-all flex items-center justify-center gap-2">
+                        <i class="ri-store-2-line"></i> Visit Store
+                    </button>
+                </div>
+                <div class="flex gap-8 pt-4 text-gray-500 text-sm font-medium justify-center">
+                    <div class="flex items-center gap-2"><i class="ri-checkbox-circle-fill text-brand-primary"></i> 100% Private</div>
+                    <div class="flex items-center gap-2"><i class="ri-checkbox-circle-fill text-brand-primary"></i> Certified Gems</div>
+                </div>
+            </div>
+            <div class="mt-16 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl border-4 border-white animate-fade-in" style="animation-delay: 0.2s;">
+                 <img src="https://images.unsplash.com/photo-1605902711622-cfb43c4437b5?q=80&w=1200&auto=format&fit=crop" alt="Vedic Ritual Havan" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700">
+            </div>
+        </div>
+    </header>
+
+    <!-- INFINITE HINDU SYMBOLS -->
+    <section class="py-8 glass border-x-0 overflow-hidden">
+        <div class="w-full flex whitespace-nowrap overflow-hidden relative">
+            <div class="flex gap-24 animate-scroll items-center opacity-80">
+                <span class="text-4xl text-brand-primary cursor-default">ॐ</span>
+                <span class="text-4xl text-brand-primary cursor-default">卐</span>
+                <span class="text-4xl text-brand-primary cursor-default">🔱</span>
+                <span class="text-4xl font-serif font-bold text-brand-primary">श्री</span>
+                <span class="text-4xl text-brand-primary cursor-default">🏺</span>
+                <span class="text-4xl text-brand-primary cursor-default">🪷</span>
+                <span class="text-4xl text-brand-primary cursor-default">🐚</span>
+                <span class="text-4xl text-brand-primary cursor-default">☸</span>
+                <span class="text-4xl text-brand-primary cursor-default">🪔</span>
+                <!-- Repeat -->
+                <span class="text-4xl text-brand-primary cursor-default">ॐ</span>
+                <span class="text-4xl text-brand-primary cursor-default">卐</span>
+                <span class="text-4xl text-brand-primary cursor-default">🔱</span>
+                <span class="text-4xl font-serif font-bold text-brand-primary">श्री</span>
+                <span class="text-4xl text-brand-primary cursor-default">🏺</span>
+                <span class="text-4xl text-brand-primary cursor-default">🪷</span>
+                <span class="text-4xl text-brand-primary cursor-default">🐚</span>
+                <span class="text-4xl text-brand-primary cursor-default">☸</span>
+                <span class="text-4xl text-brand-primary cursor-default">🪔</span>
+                <!-- Repeat 2 -->
+                <span class="text-4xl text-brand-primary cursor-default">ॐ</span>
+                <span class="text-4xl text-brand-primary cursor-default">卐</span>
+                <span class="text-4xl text-brand-primary cursor-default">🔱</span>
+                <span class="text-4xl font-serif font-bold text-brand-primary">श्री</span>
+                <span class="text-4xl text-brand-primary cursor-default">🏺</span>
+                <span class="text-4xl text-brand-primary cursor-default">🪷</span>
+                <span class="text-4xl text-brand-primary cursor-default">🐚</span>
+                <span class="text-4xl text-brand-primary cursor-default">☸</span>
+                <span class="text-4xl text-brand-primary cursor-default">🪔</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-16 px-6 bg-[#1c1917] text-gray-400 text-sm mt-20">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-2 mb-4 text-white font-serif font-bold text-xl">
+                    <div class="w-8 h-8 bg-brand-primary rounded flex items-center justify-center">A</div>
+                    Amogh Shakti
+                </div>
+                <p class="opacity-60">Bridging the gap between ancient Vedic wisdom and modern lifestyle since 2008.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Services</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-brand-primary">Kundli Matching</a></li>
+                    <li><a href="#" onclick="toggleShop()" class="hover:text-brand-primary">Gemstones</a></li>
+                    <li><a href="#" class="hover:text-brand-primary">Vastu Consult</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-brand-primary">About Guru Ji</a></li>
+                    <li><a href="#" class="hover:text-brand-primary">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-brand-primary">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Contact</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2"><i class="ri-phone-fill"></i> +91 98765 43210</li>
+                    <li class="flex items-center gap-2"><i class="ri-mail-fill"></i> help@amoghshakti.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-800 text-center text-xs opacity-50">
+            &copy; 2025 Amogh Shakti. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- MOBILE BOTTOM BAR -->
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t border-orange-100 z-50 p-3 md:hidden flex justify-around items-center shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
+        <a href="#" class="flex flex-col items-center gap-1 text-brand-primary">
+            <i class="ri-home-smile-fill text-xl"></i>
+            <span class="text-[10px] font-medium">Home</span>
+        </a>
+        <button onclick="openChat()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-primary">
+            <i class="ri-chat-ai-line text-xl"></i>
+            <span class="text-[10px] font-medium">Ask AI</span>
+        </button>
+        <button onclick="toggleShop()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-primary">
+            <i class="ri-shopping-bag-3-fill text-xl"></i>
+            <span class="text-[10px] font-medium">Shop</span>
+        </button>
+    </div>
+
+    <!-- KUNDLI INTAKE BOT -->
+    <div id="chat-widget" class="fixed bottom-24 right-6 w-80 bg-white rounded-2xl shadow-2xl transform transition-transform duration-300 translate-y-[150%] z-50 overflow-hidden flex flex-col border border-orange-100" style="height: 500px;">
+        <div id="chat-header" class="bg-brand-primary text-white p-4 cursor-move flex justify-between items-center">
+            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span><span class="font-bold font-serif">Acharya AI</span></div>
+            <button onclick="toggleChat()" class="hover:bg-white/20 rounded p-1"><i class="ri-close-line"></i></button>
+        </div>
+        <div id="chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 bg-orange-50/50"></div>
+        <div class="p-3 border-t border-orange-100 flex gap-2 bg-white">
+            <input type="text" id="chat-input" placeholder="Type here..." class="w-full bg-gray-50 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-brand-primary border border-gray-200" onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()" class="text-brand-primary p-2 hover:bg-orange-50 rounded-full"><i class="ri-send-plane-fill text-lg"></i></button>
+        </div>
+    </div>
+    
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-[#fff7ed] w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col md:flex-row max-h-[90vh]">
+            <button onclick="closeProduct()" class="absolute top-4 right-4 z-20 p-2 bg-white/50 hover:bg-white rounded-full text-gray-600 hover:text-red-500 transition-colors"><i class="ri-close-line text-2xl"></i></button>
+            <div class="w-full md:w-1/2 h-64 md:h-auto bg-gray-100 relative"><img id="modal-img" src="" alt="" class="w-full h-full object-cover"><span id="modal-tag" class="absolute top-4 left-4 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"></span></div>
+            <div class="w-full md:w-1/2 p-8 overflow-y-auto"><span id="modal-category" class="text-orange-600 font-bold text-xs uppercase tracking-widest mb-2 block"></span><h2 id="modal-name" class="text-3xl font-serif font-bold text-gray-900 mb-4"></h2><div class="flex items-center gap-4 mb-6"><span id="modal-price" class="text-2xl font-bold text-brand-primary"></span><div class="flex text-yellow-400 text-sm"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><span class="text-gray-400 ml-1 text-xs">(24 reviews)</span></div></div><p id="modal-desc" class="text-gray-600 leading-relaxed mb-6"></p><div class="mb-8"><h4 class="font-bold text-sm text-gray-900 mb-3">Key Benefits:</h4><ul id="modal-benefits" class="space-y-2 text-sm text-gray-600"></ul></div><div class="flex gap-4 mt-auto"><button class="btn-primary flex-1 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity">Add to Cart</button><button class="p-3 border border-orange-200 rounded-xl hover:bg-orange-50 text-brand-primary transition-colors"><i class="ri-heart-line text-xl"></i></button></div></div>
+        </div>
+    </div>
+
+    <!-- LOGIC -->
+    <script>
+        // --- Shop Data Generator ---
+        let PRODUCTS = [];
+        
+        // Helper to generate products
+        function generateProducts(category, baseName, basePrice, img, count) {
+            for(let i=0; i<count; i++) {
+                PRODUCTS.push({
+                    id: Math.random(),
+                    name: `${baseName} ${i > 0 ? (i+1) : ''}`,
+                    category: category,
+                    price: basePrice + (i * 500),
+                    img: img,
+                    tag: i === 0 ? 'Bestseller' : '',
+                    description: `Authentic ${baseName} for spiritual growth.`,
+                    benefits: ['Authentic Origin', 'Energized', 'Certified', 'High Quality']
+                });
+            }
+        }
+
+        // Generate 10 Products for Each Category (Total ~70)
+        generateProducts('Gemstones', 'Yellow Sapphire', 15000, 'https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&q=80&w=400', 10);
+        generateProducts('Rudraksha', 'Mukhi Rudraksha', 1200, 'https://m.media-amazon.com/images/I/71B+w+Xl1DL._AC_UY1100_.jpg', 10);
+        generateProducts('Yantras', 'Shri Yantra', 3000, 'https://images.unsplash.com/photo-1603228254119-e6a4d095dc5d?auto=format&fit=crop&q=80&w=400', 10);
+        generateProducts('Mala Beads', 'Crystal Mala', 800, 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&q=80&w=400', 10);
+        generateProducts('Idols', 'Brass Idol', 4500, 'https://images.unsplash.com/photo-1567591414240-e136599d6382?auto=format&fit=crop&q=80&w=400', 10);
+        generateProducts('Pooja Items', 'Vedic Kit', 2000, 'https://images.unsplash.com/photo-1604505370383-c59807530634?auto=format&fit=crop&q=80&w=400', 10);
+
+
+        function toggleShop() {
+            const overlay = document.getElementById('shop-overlay');
+            if (overlay.classList.contains('translate-y-full')) {
+                overlay.classList.remove('translate-y-full');
+                document.body.style.overflow = 'hidden'; 
+                renderProducts('all'); 
+            } else {
+                overlay.classList.add('translate-y-full');
+                document.body.style.overflow = 'auto'; 
+            }
+        }
+
+        function renderProducts(filter) {
+            const grid = document.getElementById('product-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            
+            // Sidebar Active State
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            const activeId = 'cat-' + filter;
+            if(document.getElementById(activeId)) document.getElementById(activeId).classList.add('active');
+
+            const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
+            document.getElementById('product-count').innerText = `Showing ${filtered.length} Products`;
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'glass rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform duration-300 border border-white animate-fade-in cursor-pointer';
+                card.onclick = () => openProduct(p.id);
+                card.innerHTML = `
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${p.img}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        ${p.tag ? `<span class="absolute top-3 left-3 bg-brand-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">${p.tag}</span>` : ''}
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif font-bold text-lg text-gray-900 mb-1 line-clamp-1">${p.name}</h3>
+                         <p class="text-xs text-gray-500 mb-2 uppercase tracking-wide">${p.category}</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-brand-primary font-bold text-lg">₹${p.price.toLocaleString()}</span>
+                            <button class="w-8 h-8 rounded-full bg-orange-100 text-brand-primary flex items-center justify-center hover:bg-brand-primary hover:text-white transition-colors"><i class="ri-eye-line"></i></button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        function filterProducts(cat) { renderProducts(cat); }
+
+        function openProduct(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            if (!product) return;
+            document.getElementById('modal-img').src = product.img;
+            document.getElementById('modal-tag').innerText = product.tag;
+            document.getElementById('modal-category').innerText = product.category;
+            document.getElementById('modal-name').innerText = product.name;
+            document.getElementById('modal-price').innerText = `₹${product.price.toLocaleString()}`;
+            document.getElementById('modal-desc').innerText = product.description;
+            const benefitsList = document.getElementById('modal-benefits');
+            benefitsList.innerHTML = '';
+            product.benefits.forEach(benefit => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center gap-2';
+                li.innerHTML = `<i class="ri-check-line text-brand-primary"></i> ${benefit}`;
+                benefitsList.appendChild(li);
+            });
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+        function closeProduct() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.add('scale-95');
+            modal.querySelector('div').classList.remove('scale-100');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        // Initialize Shop
+        renderProducts('all');
+
+        // Scroll Navbar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { navbar.classList.add('glass', 'py-3'); navbar.classList.remove('py-5'); } 
+            else { navbar.classList.remove('glass', 'py-3'); navbar.classList.add('py-5'); }
+        });
+
+        // Horizontal Scroll
+        function scrollServices(direction) {
+            document.getElementById('service-container').scrollBy({ left: direction * 320, behavior: 'smooth' });
+        }
+
+        // Stats Counter
+        const counters = document.querySelectorAll('.counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    counters.forEach(c => {
+                        const target = +c.getAttribute('data-target');
+                        let count = 0;
+                        const inc = target / 50;
+                        const timer = setInterval(() => {
+                            count += inc;
+                            if(count >= target) { c.innerText = target + "+"; clearInterval(timer); } 
+                            else { c.innerText = Math.ceil(count) + "+"; }
+                        }, 30);
+                    });
+                    observer.disconnect();
+                }
+            });
+        });
+        const statsSection = document.querySelector('.stat-item');
+        if(statsSection) observer.observe(statsSection);
+
+        // Acharya AI
+        const chatWidget = document.getElementById('chat-widget');
+        const chatBody = document.getElementById('chat-body');
+        const chatInput = document.getElementById('chat-input');
+        let isChatOpen = false;
+        let chatStep = 0;
+        let userData = { name: '', dob: '', time: '', place: '', gender: '' };
+
+        function toggleChat() {
+            isChatOpen = !isChatOpen;
+            chatWidget.style.transform = isChatOpen ? 'translateY(0)' : 'translateY(150%)';
+            if(isChatOpen && chatBody.children.length === 0) {
+                addBotMsg("Namaste! 🙏 I am Acharya AI. To create your accurate Kundli, I need a few details. Shall we start with your **Full Name**?");
+            }
+        }
+        window.openChat = () => { if(!isChatOpen) toggleChat(); }
+
+        function addBotMsg(text) {
+            const div = document.createElement('div');
+            div.className = 'bg-white border border-orange-100 p-3 rounded-tl-xl rounded-tr-xl rounded-br-xl self-start max-w-[85%] text-sm text-gray-700 shadow-sm animate-fade-in';
+            div.innerHTML = text;
+            chatBody.appendChild(div);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function addUserMsg(text) {
+            const div = document.createElement('div');
+            div.className = 'btn-primary p-3 rounded-tl-xl rounded-tr-xl rounded-bl-xl self-end max-w-[85%] text-sm text-white shadow-sm animate-fade-in';
+            div.innerText = text;
+            chatBody.appendChild(div);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if(!text) return;
+            addUserMsg(text);
+            chatInput.value = '';
+            setTimeout(() => {
+                switch(chatStep) {
+                    case 0: userData.name = text; addBotMsg(`Welcome, ${text} Ji. Please share your **Date of Birth** (DD-MM-YYYY).`); chatStep++; break;
+                    case 1: userData.dob = text; addBotMsg("Noted. What is your exact **Time of Birth**?"); chatStep++; break;
+                    case 2: userData.time = text; addBotMsg("And your **Place of Birth** (City, State)?"); chatStep++; break;
+                    case 3: userData.place = text; addBotMsg("Thank you. Lastly, your **Gender**?"); chatStep++; break;
+                    case 4: userData.gender = text; addBotMsg("Perfect. I have recorded your details. An expert Acharya will analyze your chart and contact you shortly on WhatsApp."); chatStep++; break;
+                    default: addBotMsg("Your request is already being processed. 🙏");
+                }
+            }, 800);
+        }
+    </script>
+</body>
+</html>
